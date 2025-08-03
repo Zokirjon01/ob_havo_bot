@@ -7,7 +7,6 @@ app = Flask(__name__)
 TOKEN = "8452355657:AAFinwieyCMPaZ17sdK0tzYqmjw2jYxp-Jw"
 API_URL = f"https://api.telegram.org/bot{TOKEN}"
 
-
 def send_message(chat_id, text, reply_markup=None):
     payload = {
         "chat_id": chat_id,
