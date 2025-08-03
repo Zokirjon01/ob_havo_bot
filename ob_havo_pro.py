@@ -3,6 +3,7 @@ import requests
 import json
 import sqlite3
 
+# API kalitingizni shu yerga yozing
 OPENWEATHER_KEY = "a31f28e0afcf5884405f129fc329f04a"
 
 DISTRICTS = {
@@ -50,31 +51,22 @@ def init_db():
     cursor = conn.cursor()
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            chat_id INTEGER UNIQUE,
+            username TEXT,
             first_name TEXT,
             last_name TEXT,
-            username TEXT
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
     conn.commit()
     conn.close()
 
-def add_user_to_db(chat_id, first_name, last_name, username):
+def save_user(chat_id, username, first_name):
     conn = sqlite3.connect("users.db")
     cursor = conn.cursor()
-    cursor.execute("SELECT id FROM users WHERE id=?", (chat_id,))
-    if not cursor.fetchone():
-        cursor.execute(
-            "INSERT INTO users (id, first_name, last_name, username) VALUES (?, ?, ?, ?)",
-            (chat_id, first_name, last_name, username)
-        )
-        conn.commit()
+    cursor.execute("""
+        INSERT OR IGNORE INTO users (chat_id, username, first_name) VALUES (?, ?, ?)
+    """, (chat_id, username, first_name))
+    conn.commit()
     conn.close()
-
-def get_all_users():
-    conn = sqlite3.connect("users.db")
-    cursor = conn.cursor()
-    cursor.execute("SELECT id, first_name, last_name, username FROM users")
-    users = cursor.fetchall()
-    conn.close()
-    return users

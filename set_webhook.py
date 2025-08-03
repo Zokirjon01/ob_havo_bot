@@ -2,9 +2,12 @@
 import requests
 
 TOKEN = "8452355657:AAFinwieyCMPaZ17sdK0tzYqmjw2jYxp-Jw"
-NGROK_URL = "https://c1f125430503.ngrok-free.app"
-API_URL = f"https://api.telegram.org/bot{TOKEN}/setWebhook"
+NGROK_URL = "https://7cfe8e8bc85c.ngrok-free.app"  # NGROK ni to‘liq HTTPS linki
+WEBHOOK_URL = f"{NGROK_URL}/webhook/{TOKEN}"
 
-webhook_url = f"{NGROK_URL}/webhook/{TOKEN}"
-response = requests.get(API_URL, params={"url": webhook_url})
+response = requests.get(
+    f"https://api.telegram.org/bot{TOKEN}/setWebhook",
+    params={"url": WEBHOOK_URL}
+)
+
 print(response.json())
