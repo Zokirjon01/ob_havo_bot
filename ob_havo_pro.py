@@ -2,9 +2,10 @@
 import requests
 import json
 import sqlite3
+import os
 
 # API kalitingizni shu yerga yozing
-OPENWEATHER_KEY = "a31f28e0afcf5884405f129fc329f04a"
+OPENWEATHER_KEY = os.getenv("a31f28e0afcf5884405f129fc329f04a")
 
 DISTRICTS = {
     "Farg'ona shahri": (40.3896, 71.7824),

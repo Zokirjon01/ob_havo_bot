@@ -2,9 +2,10 @@
 from flask import Flask, request
 import requests
 from ob_havo_pro import DISTRICTS, get_weather_text, make_district_keyboard, save_user
+import os
 
 app = Flask(__name__)
-TOKEN = "8452355657:AAFinwieyCMPaZ17sdK0tzYqmjw2jYxp-Jw"
+TOKEN = os.getenv("8452355657:AAFinwieyCMPaZ17sdK0tzYqmjw2jYxp-Jw")
 API_URL = f"https://api.telegram.org/bot{TOKEN}"
 
 def send_message(chat_id, text, reply_markup=None):
